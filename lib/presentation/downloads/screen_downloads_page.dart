@@ -1,7 +1,11 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:netflix_ui/application/downloads/downloads_bloc.dart';
 import 'package:netflix_ui/core/colors/colors.dart';
+import 'package:netflix_ui/core/strings.dart';
+import 'package:netflix_ui/domain/downloads/model/downloads.dart';
 import 'package:netflix_ui/presentation/downloads/widgets/appbar_widget.dart';
 
 class ScreenDownloadsPage extends StatelessWidget {
@@ -95,6 +99,12 @@ class IntroTextAndImageSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance!.addPostFrameCallback(
+      (timeStamp) {
+        BlocProvider.of<DownloadsBloc>(context)
+            .add(const DownloadsEvent.getDownloadsImages());
+      },
+    );
     return Column(
       children: [
         Text(
@@ -116,43 +126,46 @@ class IntroTextAndImageSection extends StatelessWidget {
             fontSize: 13,
           ),
         ),
-        SizedBox(
-          width: size.width,
-          height: size.width * .57,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              CircleAvatar(
-                backgroundColor: whiteColor.withOpacity(.2),
-                radius: size.width * .25,
-              ),
-              StackImageContainer(
-                size: size,
-                url:
-                    'https://www.themoviedb.org/t/p/w220_and_h330_face/7RcyjraM1cB1Uxy2W9ZWrab4KCw.jpg',
-                angle: -20 * pi / 180,
-                rightMargin: 120,
-                bottomMargin: 28,
-                height: size.height * .152,
-              ),
-              StackImageContainer(
-                size: size,
-                url:
-                    'https://www.themoviedb.org/t/p/w220_and_h330_face/vUUqzWa2LnHIVqkaKVlVGkVcZIW.jpg',
-                angle: 20 * pi / 180,
-                leftMargin: 120,
-                height: size.height * .152,
-                bottomMargin: 28,
-              ),
-              StackImageContainer(
-                size: size,
-                url:
-                    'https://www.themoviedb.org/t/p/w220_and_h330_face/g4tMniKxol1TBJrHlAtiDjjlx4Q.jpg',
-                angle: 0,
-                height: size.height * .178,
-              ),
-            ],
-          ),
+        BlocBuilder<DownloadsBloc, DownloadsState>(
+          builder: (context, state) {
+            return SizedBox(
+              width: size.width,
+              height: size.width * .57,
+              child: state.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: whiteColor.withOpacity(.2),
+                          radius: size.width * .25,
+                        ),
+                        StackImageContainer(
+                          size: size,
+                          url: '$kAppentUrl${state.downloads[2].posterPath}',
+                          angle: -20 * pi / 180,
+                          rightMargin: 120,
+                          bottomMargin: 28,
+                          height: size.height * .152,
+                        ),
+                        StackImageContainer(
+                          size: size,
+                          url: '$kAppentUrl${state.downloads[1].posterPath}',
+                          angle: 20 * pi / 180,
+                          leftMargin: 120,
+                          height: size.height * .152,
+                          bottomMargin: 28,
+                        ),
+                        StackImageContainer(
+                          size: size,
+                          url: '$kAppentUrl${state.downloads[0].posterPath}',
+                          angle: 0,
+                          height: size.height * .178,
+                        ),
+                      ],
+                    ),
+            );
+          },
         ),
       ],
     );

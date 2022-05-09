@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:netflix_ui/presentation/fast_laughs_page/screen_fast_laughs.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../core/colors/colors.dart';
 import '../../../core/constants.dart';
 
 class ColumnOfIconsWidget extends StatelessWidget {
+  final String? image;
   const ColumnOfIconsWidget({
     Key? key,
+    required this.image,
   }) : super(key: key);
 
   @override
@@ -19,23 +23,33 @@ class ColumnOfIconsWidget extends StatelessWidget {
           height: MediaQuery.of(context).size.height * .4,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               ProfileImageNameWidget(
+                image: image,
                 accountName: 'VIR DAS',
               ),
-              IconAndTextWidget(
+              const IconAndTextWidget(
                 title: 'LOL',
                 icon: Icons.emoji_emotions,
               ),
-              IconAndTextWidget(
+              const IconAndTextWidget(
                 title: 'My List',
                 icon: Icons.add,
               ),
-              IconAndTextWidget(
-                title: 'Share',
-                icon: Icons.share,
+              GestureDetector(
+                onTap: () {
+                  final movieName =
+                      VideoListItemInheritedWidget.of(context)?.movieData.title;
+                  if (movieName != null) {
+                    Share.share(movieName);
+                  }
+                },
+                child: const IconAndTextWidget(
+                  title: 'Share',
+                  icon: Icons.share,
+                ),
               ),
-              IconAndTextWidget(
+              const IconAndTextWidget(
                 title: 'Play',
                 icon: Icons.play_arrow,
               )
@@ -48,32 +62,19 @@ class ColumnOfIconsWidget extends StatelessWidget {
 }
 
 class ProfileImageNameWidget extends StatelessWidget {
+  final String? image;
   final String accountName;
   const ProfileImageNameWidget({
     Key? key,
     required this.accountName,
+    required this.image,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        const CircleAvatar(
-          backgroundColor: blackColor,
-          radius: 25,
-        ),
-        Positioned(
-          bottom: -3,
-          left: 6,
-          child: Text(
-            accountName,
-            style: GoogleFonts.roboto(
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        )
-      ],
+    return CircleAvatar(
+      backgroundImage: image == null ? null : NetworkImage(image!),
+      radius: 25,
     );
   }
 }

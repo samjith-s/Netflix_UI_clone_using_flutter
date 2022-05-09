@@ -45,10 +45,10 @@ class CommonHImageContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(4),
         color: greyColor,
         image: DecorationImage(
-          image: NetworkImage(
-            url,
-          ),
-        ),
+            image: NetworkImage(
+              url,
+            ),
+            fit: BoxFit.cover),
       ),
     );
   }

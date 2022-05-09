@@ -29,13 +29,24 @@ environment:
 dependencies:
   bordered_text: ^2.0.0
   cupertino_icons: ^1.0.4
+  dartz: ^0.10.1
+  dio: ^4.0.6
   flutter:
     sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+  flutter_bloc: ^8.0.1
+  freezed_annotation: ^2.0.3
+  get_it: ^7.2.0
   google_fonts: ^2.3.2
+  injectable: ^1.5.3
+  intl: ^0.17.0
+  json_annotation: ^4.5.0
+  json_serializable: ^6.2.0
   scrollable_positioned_list: ^0.3.0
+  share_plus: 4.0.3
+  video_player: 2.3.0
   visibility_detector: ^0.3.2
 
 dev_dependencies:
@@ -48,6 +59,9 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+  build_runner: ^2.1.10
+  freezed: ^2.0.2
+  injectable_generator: ^1.5.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

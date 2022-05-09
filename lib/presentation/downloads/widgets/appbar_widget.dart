@@ -32,7 +32,12 @@ class AppBarWidget extends StatelessWidget {
             width: 23,
             height: 23,
             decoration: BoxDecoration(
-              color: Colors.red,
+              //color: Colors.red,
+              image: const DecorationImage(
+                image: NetworkImage(
+                  'https://ih0.redbubble.net/image.618363037.0853/flat,1000x1000,075,f.u2.jpg',
+                ),
+              ),
               borderRadius: BorderRadius.circular(3),
             ),
           )

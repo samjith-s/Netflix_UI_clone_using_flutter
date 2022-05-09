@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'homepage_mainimage_bottonbuttons.dart';
 
 class HomePageMainImageWidget extends StatelessWidget {
+  final String imageUrl;
   const HomePageMainImageWidget({
     Key? key,
+    required this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -24,10 +26,10 @@ class HomePageMainImageWidget extends StatelessWidget {
           )
         ],
       ),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
           image: NetworkImage(
-            'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/pWHf4khOloNVfCxscsXFj3jj6gP.jpg',
+            imageUrl,
           ),
           fit: BoxFit.cover,
         ),
